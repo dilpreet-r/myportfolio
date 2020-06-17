@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" user-scalable=0 />
+    <meta charset="utf-8">
+    <title>Home</title>
+      <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+      <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+
+    <style >
+      /* For mobile phones: */
+      html{
+        position:relative;
+        height:100vh;
+        overflow:hidden;
+        border:10px solid black;
+      }
+      body{
+        margin:0;
+        background-image:url("img.jpg");
+        background-size:cover;
+        background-position:center;
+
+      }
+      .navbar-dark .navbar-nav > li > a{
+        color:white !important;
+        letter-spacing:4px;
+        position:relative;
+        margin-right:40px;
+        border:2px solid transparent;
+        padding:10px;
+        font-size:110%;
+
+      }
+      .navbar-dark .navbar-nav > li > a:hover{
+        border:2px solid white;
+
+      }
+      .navbar-dark .navbar-nav{
+        padding-left:15% !important;
+      }
+      .loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url("loader.gif") center no-repeat #fff;
+}
+
+
+    h1 {
+      font-weight: 100;
+      margin: 0.4em 0;
+    }
+    h1 { font-size: 3.5em; }
+
+
+    .text-box{
+      color:white;
+      position:absolute;
+      font-family: 'Raleway', sans-serif;
+      padding: 3em 2em;
+      font-size: 98%;
+      bottom:5%;
+    }
+    @media screen and (min-width: 600px) {
+  /* For tablets: */
+  	.text-box{
+      color:white;
+      position:absolute;
+      font-family: 'Raleway', sans-serif;
+      padding: 3em 2em;
+      font-size: 110%;
+      bottom:8%;
+    }
+	}
+
+	@media screen and (min-width: 768px) {
+  /* For desktop: */
+  	.text-box{
+      color:white;
+      position:absolute;
+      font-family: 'Raleway', sans-serif;
+      padding: 3em 2em;
+      font-size: 170%;
+      bottom:10%;
+    }
+	}
+
+    </style>
+
+  </head>
+
+    <body>
+      <div class="loader">
+      </div>
+
+    <nav class="navbar navbar-expand-md navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#"></a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="home.html">HOME</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="works.html">WORKS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about.html">ABOUT</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="contact.html">CONTACT</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+    <div class="text-box container-fluid">
+      <h1>
+    <span
+       class="txt-rotate"
+       data-period="200"
+       data-rotate='[ "Hello! ", "I am Dilpreet Randhawa ", "Have a look at my work! " ]'></span>
+  </h1>
+    </div>
+
+    <script >
+    var TxtRotate = function(el, toRotate, period) {
+    this.toRotate = toRotate;
+    this.el = el;
+    this.loopNum = 0;
+    this.period = parseInt(period, 10) || 200;
+    this.txt = '';
+    this.tick();
+    this.isDeleting = false;
+  };
+
+  TxtRotate.prototype.tick = function() {
+    var i = this.loopNum % this.toRotate.length;
+    var fullTxt = this.toRotate[i];
+
+    if (this.isDeleting) {
+      this.txt = fullTxt.substring(0, this.txt.length - 1);
+    } else {
+      this.txt = fullTxt.substring(0, this.txt.length + 1);
+    }
+
+    this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+    var that = this;
+    var delta = 300 - Math.random() * 200;
+
+    if (this.isDeleting) { delta /= 2; }
+
+    if (!this.isDeleting && this.txt === fullTxt) {
+      delta = this.period;
+      this.isDeleting = true;
+    } else if (this.isDeleting && this.txt === '') {
+      this.isDeleting = false;
+      this.loopNum++;
+      delta = 200;
+    }
+
+    setTimeout(function() {
+      that.tick();
+    }, delta);
+  };
+
+  window.onload = function() {
+    $(".loader").fadeOut("slow");
+    var elements = document.getElementsByClassName('txt-rotate');
+    for (var i=0; i<elements.length; i++) {
+      var toRotate = elements[i].getAttribute('data-rotate');
+      var period = elements[i].getAttribute('data-period');
+      if (toRotate) {
+        new TxtRotate(elements[i], JSON.parse(toRotate), period);
+      }
+    }
+    // INJECT CSS
+    var css = document.createElement("style");
+    css.type = "text/css";
+    css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+    document.body.appendChild(css);
+  };
+      </script>
+  </body>
+</html>
